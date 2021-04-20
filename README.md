@@ -10,14 +10,6 @@
   <a href="#-license">License</a>
 </p>
 
-<p align="center">
-  <img  src="https://img.shields.io/static/v1?label=license&message=MIT&color=FFFFFF&labelColor=32B768" alt="License">
-  
-  <img src="https://img.shields.io/github/forks/LeonardoCosta90/nlw05-react-native?label=forks&message=MIT&color=FFFFFF&labelColor=32B768" alt="Forks">
-
-  <img src="https://img.shields.io/github/stars/LeonardoCosta90/nlw05-react-native?label=stars&message=MIT&color=FFFFFF&labelColor=32B768" alt="Stars">
-</p>
-
 <br>
 
 <p align="center">
