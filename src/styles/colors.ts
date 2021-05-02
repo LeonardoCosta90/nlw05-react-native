@@ -1,19 +1,25 @@
-export default {
-  green: '#32B768',
-  green_dark: '#2B7A4B',
+import { transparentize } from 'polished';
+
+const colors = {
   green_light: '#DAF2E4',
+  green: '#32b768',
+  green_dark: '#2b7a4b',
 
-  heading: '#52665A',
-  body_dark: '#738078',
-  body_light: '#AAB2AD',
+  heading: '#52665a',
+  body_dark: '#5C6660',
+  body_light: '#aab2ad',
 
-  background: '#FFFFFF',
-  shape: '#F0F0F0',
-  white: '#FFFFFF',
-  gray: '#CFCFCF',
+  background: '#ffffff',
+  shape: '#f0f0f0',
+  white: '#ffffff',
+  gray: '#cfcfcf',
 
-  blue: '#3D7199',
-  blue_light: '#EBF6FF',
+  blue: '#3d7199',
+  blue_light: '#ebf6ff',
 
-  red: '#E83F5B',
-};
+  red: '#e83f5b',
+
+  placeholder: transparentize(0.5, '#5C6660'),
+} as const;
+
+export { colors };

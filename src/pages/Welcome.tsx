@@ -1,47 +1,45 @@
 import React from 'react';
+import { Feather } from '@expo/vector-icons';
 import {
-  SafeAreaView,
+  View,
   Text,
   Image,
-  TouchableOpacity,
   StyleSheet,
-  Dimensions,
-  View,
+  SafeAreaView,
+  TouchableOpacity,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-import wateringImg from '../assets/watering.png';
-import colors from '../styles/colors';
-import fonts from '../styles/fonts';
-import { useNavigation } from '@react-navigation/core';
+import { fonts } from '../styles/fonts';
+import { colors } from '../styles/colors';
+
+import wateringImg from '../assets/images/watering.png';
 
 export function Welcome() {
   const navigation = useNavigation();
 
-  function handleStart() {
+  function handleNavigateToUserIdentificationPage() {
     navigation.navigate('UserIdentification');
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.wrapper}>
+      <View style={styles.content}>
         <Text style={styles.title}>
-          Gerencie {'\n'}
-          suas plantas de {'\n'}
-          forma fácil
+          Gerencie{'\n'}suas plantas de{'\n'} forma fácil
         </Text>
 
-        <Image source={wateringImg} style={styles.image} resizeMode="contain" />
+        <Image source={wateringImg} />
 
-        <Text style={styles.subtitle}>
-          Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar você
-          sempre que precisar.
+        <Text style={styles.subTitle}>
+          Não esqueça mais de regar suas{'\n'}plantas. Nós cuidamos de lembrar você sempre
+          que precisar.
         </Text>
 
         <TouchableOpacity
-          style={styles.button}
+          style={styles.nextButton}
           activeOpacity={0.7}
-          onPress={handleStart}
+          onPress={handleNavigateToUserIdentificationPage}
         >
           <Feather name="chevron-right" style={styles.buttonIcon} />
         </TouchableOpacity>
@@ -54,32 +52,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  wrapper: {
+
+  content: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-around',
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
   },
+
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
     color: colors.heading,
-    marginTop: 38,
+    marginTop: 8,
     fontFamily: fonts.heading,
-    lineHeight: 34,
+    lineHeight: 38,
   },
-  subtitle: {
+
+  subTitle: {
     textAlign: 'center',
     fontSize: 18,
     paddingHorizontal: 20,
-    color: colors.heading,
+    color: colors.body_dark,
     fontFamily: fonts.text,
   },
-  image: {
-    height: Dimensions.get('window').width * 0.7,
-  },
-  button: {
+
+  nextButton: {
     backgroundColor: colors.green,
     justifyContent: 'center',
     alignItems: 'center',
@@ -88,8 +87,9 @@ const styles = StyleSheet.create({
     height: 56,
     width: 56,
   },
+
   buttonIcon: {
-    fontSize: 32,
+    fontSize: 28,
     color: colors.white,
   },
 });

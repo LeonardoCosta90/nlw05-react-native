@@ -1,33 +1,37 @@
 import React, { useState } from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  View,
   Text,
+  View,
   TextInput,
+  StyleSheet,
+  SafeAreaView,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  Platform,
   Keyboard,
 } from 'react-native';
-
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
+import { transparentize } from 'polished';
 
 import { Button } from '../components/Button';
 
-import colors from '../styles/colors';
-import fonts from '../styles/fonts';
+import { fonts } from '../styles/fonts';
+import { colors } from '../styles/colors';
 
 export function UserIdentification() {
+  const navigation = useNavigation();
+
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
-  const [name, setName] = useState<string>();
+  const [name, setName] = useState('');
 
-  const navigation = useNavigation();
+  function handleNavigateToConfirmationPage() {
+    if (!name) return;
+
+    navigation.navigate('Confirmation');
+  }
 
   function handleInputBlur() {
     setIsFocused(false);
-    setIsFilled(!!name);
   }
 
   function handleInputFocus() {
@@ -39,40 +43,35 @@ export function UserIdentification() {
     setName(value);
   }
 
-  function handleSubmit() {
-    navigation.navigate('Confirmation');
-  }
-
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+      <KeyboardAvoidingView style={styles.container}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.content}>
             <View style={styles.form}>
-              <View style={styles.header}>
-                <Text style={styles.emoji}>{isFilled ? '😄' : '😀'}</Text>
-                <Text style={styles.title}>
-                  Como podemos {'\n'}
-                  chamar você?
-                </Text>
-              </View>
+              <Text style={styles.emoji}>{isFilled ? '🙈' : '😁'}</Text>
+              <Text style={styles.title}>Como podemos{'\n'}chamar você?</Text>
+
               <TextInput
-                style={[
-                  styles.input,
-                  (isFocused || isFilled) && { borderColor: colors.green },
-                ]}
-                placeholder="Digite um nome"
+                value={name}
                 onBlur={handleInputBlur}
                 onFocus={handleInputFocus}
+                placeholder="Digite um nome"
                 onChangeText={handleInputChange}
+                placeholderTextColor={colors.placeholder}
+                style={[styles.input, (isFocused || isFilled) && styles.inputOnFocus]}
               />
 
-              <View style={styles.footer}>
-                <Button title="Confirmar" onPress={handleSubmit} />
-              </View>
+              <Button
+                title="Confirmar"
+                activeOpacity={0.7}
+                disabled={!isFilled}
+                containerStyle={[
+                  styles.buttonContainer,
+                  isFilled && styles.buttonContainerIsFilled,
+                ]}
+                onPress={handleNavigateToConfirmationPage}
+              />
             </View>
           </View>
         </TouchableWithoutFeedback>
@@ -84,46 +83,58 @@ export function UserIdentification() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'space-around',
+    width: '100%',
   },
+
   content: {
     flex: 1,
     width: '100%',
+    marginTop: 128,
   },
+
   form: {
     flex: 1,
-    justifyContent: 'center',
+    alignItems: 'center',
     paddingHorizontal: 54,
-    alignItems: 'center',
   },
-  header: {
-    alignItems: 'center',
-  },
+
   emoji: {
     fontSize: 44,
   },
+
+  title: {
+    fontSize: 24,
+    textAlign: 'center',
+    color: colors.heading,
+    fontFamily: fonts.heading,
+    lineHeight: 32,
+    marginTop: 24,
+  },
+
   input: {
     borderBottomWidth: 1,
     borderColor: colors.gray,
     color: colors.heading,
-    width: '100%',
+    fontSize: 18,
     marginTop: 50,
     padding: 10,
     textAlign: 'center',
-  },
-  title: {
-    fontSize: 24,
-    lineHeight: 32,
-    textAlign: 'center',
-    color: colors.heading,
-    fontFamily: fonts.heading,
-    marginTop: 20,
-  },
-  footer: {
     width: '100%',
+  },
+
+  inputOnFocus: {
+    borderColor: colors.green,
+  },
+
+  buttonContainer: {
     marginTop: 40,
-    paddingHorizontal: 20,
+    width: 232,
+    backgroundColor: transparentize(0.5, colors.green),
+  },
+
+  buttonContainerIsFilled: {
+    backgroundColor: colors.green,
   },
 });
